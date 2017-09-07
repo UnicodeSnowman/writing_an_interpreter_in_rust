@@ -1,6 +1,6 @@
 use token;
 
-struct Lexer {
+pub struct Lexer {
   input: String, // TODO can I get away with using &str here instead?
   position: usize,
   read_position: usize,
@@ -170,6 +170,7 @@ impl Lexer {
   }
 }
 
+#[allow(dead_code)]
 mod test {
   use super::*;
 
@@ -178,7 +179,7 @@ mod test {
     expected_literal: &'a str,
   }
 
-  const input: &str = r#"let    five = 5;
+  const INPUT: &str = r#"let    five = 5;
 let ten = 10;
 
 let add = fn(x, y) {
@@ -254,7 +255,7 @@ if (5 < 10) {
       TestCase{expected_type: token::TokenType::Int, expected_literal: "9"},
       TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
     ];
-    let mut lexer = Lexer::new(input);
+    let mut lexer = Lexer::new(INPUT);
 
     for test_case in test_cases {
       let tok = lexer.next_token();

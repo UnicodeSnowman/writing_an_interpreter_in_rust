@@ -1,5 +1,5 @@
-mod lexer;
-mod token;
+pub mod lexer;
+pub mod token;
 
 fn main() {
 /*
