@@ -1,15 +1,7 @@
 pub mod lexer;
 pub mod token;
+pub mod repl;
 
 fn main() {
-/*
-    let input = String::from("=+(){}y̆;");
-    //let plus: Option<char> = input.chars().nth(7);
-    let plus = input.graphemes();
-    println!("{:?}", plus);
-
-    for c in input.chars() {
-      println!("{:?}", c);
-    }
-    */
+    repl::start();
 }

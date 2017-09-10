@@ -16,12 +16,12 @@ fn is_digit(ch: char) -> bool {
 }
 
 impl Lexer {
-  pub fn new(input: &str) -> Lexer {
+  pub fn new(input: String) -> Lexer {
     let mut lexer = Lexer {
-      input: String::from(input),
+      input: input,
       position: 0,
       read_position: 0,
-      ch: input.chars().nth(0),
+      ch: None,
     };
 
     lexer.read_char();
@@ -254,8 +254,40 @@ if (5 < 10) {
       TestCase{expected_type: token::TokenType::NotEq, expected_literal: "!="},
       TestCase{expected_type: token::TokenType::Int, expected_literal: "9"},
       TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
+
+      TestCase{expected_type: token::TokenType::Bang, expected_literal: "!"},
+      TestCase{expected_type: token::TokenType::Minus, expected_literal: "-"},
+      TestCase{expected_type: token::TokenType::Slash, expected_literal: "/"},
+      TestCase{expected_type: token::TokenType::Asterisk, expected_literal: "*"},
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "5"},
+      TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
+
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "5"},
+      TestCase{expected_type: token::TokenType::Lt, expected_literal: "<"},
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "10"},
+      TestCase{expected_type: token::TokenType::Gt, expected_literal: ">"},
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "5"},
+      TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
+
+      TestCase{expected_type: token::TokenType::If, expected_literal: "if"},
+      TestCase{expected_type: token::TokenType::Lparen, expected_literal: "("},
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "5"},
+      TestCase{expected_type: token::TokenType::Lt, expected_literal: "<"},
+      TestCase{expected_type: token::TokenType::Int, expected_literal: "10"},
+      TestCase{expected_type: token::TokenType::Rparen, expected_literal: ")"},
+      TestCase{expected_type: token::TokenType::Lbrace, expected_literal: "{"},
+      TestCase{expected_type: token::TokenType::Return, expected_literal: "return"},
+      TestCase{expected_type: token::TokenType::True, expected_literal: "true"},
+      TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
+      TestCase{expected_type: token::TokenType::Rbrace, expected_literal: "}"},
+      TestCase{expected_type: token::TokenType::Else, expected_literal: "else"},
+      TestCase{expected_type: token::TokenType::Lbrace, expected_literal: "{"},
+      TestCase{expected_type: token::TokenType::Return, expected_literal: "return"},
+      TestCase{expected_type: token::TokenType::False, expected_literal: "false"},
+      TestCase{expected_type: token::TokenType::Semicolon, expected_literal: ";"},
+      TestCase{expected_type: token::TokenType::Rbrace, expected_literal: "}"},
     ];
-    let mut lexer = Lexer::new(INPUT);
+    let mut lexer = Lexer::new(String::from(INPUT));
 
     for test_case in test_cases {
       let tok = lexer.next_token();
