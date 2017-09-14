@@ -8,9 +8,10 @@ use token::{TokenType};
 const PROMPT: &str = ">> ";
 
 pub fn start() {
+    let mut stdout = io::stdout();
     loop {
-        let _ = io::stdout().write(PROMPT.as_bytes());
-        let _ = io::stdout().flush();
+        stdout.write(PROMPT.as_bytes()).expect("Failed to write prompt");
+        stdout.flush().expect("Failed to flush stdout");
 
         let mut line = String::new();
         let _ = io::stdin().read_line(&mut line);
@@ -20,7 +21,7 @@ pub fn start() {
         line.truncate(len - 1);
 
         if line == "exit" {
-            println!("{:?}", "Goodbye!");
+            stdout.write("Goodbye!".as_bytes()).expect("Failed to write exit message");
             exit(0);
         }
 
@@ -31,6 +32,7 @@ pub fn start() {
             if tok.token_type == TokenType::Eof {
                 break;
             } else {
+                // TODO format string w/o using println!, mostly as an exercise
                 println!("Literal: {:?}, Type: {:?}", tok.literal, tok.token_type);
             }
         }
