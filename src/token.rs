@@ -1,4 +1,4 @@
-#[derive(Debug,PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TokenType {
   Illegal,
   Eof,
@@ -76,8 +76,9 @@ pub fn lookup_identifier(ident: &str) -> TokenType {
   }
 }
 
-pub struct Token<'a> {
+#[derive(Clone, Copy)] 
+pub struct Token<'s> {
   pub token_type: TokenType,
-  pub literal: &'a str
+  pub literal: &'s str
 }
 

@@ -1,10 +1,11 @@
 use token;
 
 pub struct Lexer {
-  input: String, // TODO can I get away with using &str here instead?
+  input: String,
   position: usize,
   read_position: usize,
   ch: Option<char>,
+  //current_token: Option<token::Token<'l>>,
 }
 
 fn is_letter(ch: char) -> bool {
@@ -22,13 +23,27 @@ impl Lexer {
       position: 0,
       read_position: 0,
       ch: None,
+      //current_token: None,
     };
 
     lexer.read_char();
     lexer
   }
 
-  pub fn next_token(&mut self) -> token::Token {
+  pub fn current_token(&self) -> token::Token {
+    let tok = token::Token {
+      token_type: token::TokenType::Illegal,
+      literal: ""
+    };
+
+    tok
+  }
+
+  // TODO to avoid issues with multiple mutable borrows,
+  // next_token should simply advance (maybe return end condition
+  // if necessary?). Then, a read-only (current_token) method will
+  // actually return the token, which can be easily copied
+  pub fn next_token(& mut self) -> token::Token {
     let mut tok = token::Token {
       token_type: token::TokenType::Illegal,
       literal: ""
